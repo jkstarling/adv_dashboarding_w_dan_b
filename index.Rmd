@@ -2,10 +2,13 @@
 title: "Jim's Advanced Dashboard"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
+    orientation: row
     vertical_layout: fill
     social: ["menu"]
     source_code: embed
+    theme:
+      version: 4
+      bootswatch: sandstone
 ---
 
 
@@ -23,10 +26,28 @@ data("penguins")
 ```
 
 
-Plots
+Plots {data-navmenu="Pages"}
 ======================================================================
 
-Column {data-width=650}
+Sidebar {.sidebar}
+--------------------------------------------------------------
+
+<!--   fontawesome.com   bootswatch.com -->
+
+### Penguin Stats
+
+The number of penguins in the data is `r nrow(penguins)`
+
+Row 
+-------------------------------
+### Number of penguins
+```{r}
+valueBox(nrow(penguins), icon="fa-linux")
+```
+
+
+
+Column {.tabset}
 -----------------------------------------------------------------------
 
 ### Scatter Plot of Bill Length and Bill Depth
@@ -41,8 +62,7 @@ ggplotly(a)
 
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
+
 
 ### Boxplot of Body mass by sex
 
@@ -56,7 +76,7 @@ penguins %>% ggplot(aes(x=body_mass_g, y=sex, fill=sex)) + geom_boxplot()
 penguins %>% ggplot(aes(x=flipper_length_mm, fill=species)) + geom_histogram() + facet_wrap(~species, ncol=1 )
 ```
 
-DATA 
+DATA {data-navmenu="Pages"}
 ================================================================================
 
 ```{r}
