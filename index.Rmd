@@ -1,0 +1,77 @@
+---
+title: "Jim's Advanced Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    social: ["menu"]
+    source_code: embed
+---
+
+
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(palmerpenguins)
+library(plotly) 
+library(DT)
+library(fontawesome)
+
+data("penguins")
+
+```
+
+
+Plots
+======================================================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Scatter Plot of Bill Length and Bill Depth
+
+```{r}
+# see htmlwidgets.com
+
+a <- penguins %>% ggplot(aes(x=bill_length_mm, y=bill_depth_mm, color = species)) + geom_point()
+
+ggplotly(a)
+
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Boxplot of Body mass by sex
+
+```{r}
+penguins %>% ggplot(aes(x=body_mass_g, y=sex, fill=sex)) + geom_boxplot()
+```
+
+### Histogram of Flipper Lengths by Species
+
+```{r}
+penguins %>% ggplot(aes(x=flipper_length_mm, fill=species)) + geom_histogram() + facet_wrap(~species, ncol=1 )
+```
+
+DATA 
+================================================================================
+
+```{r}
+# datatable() is from DT package
+penguins %>% datatable(extensions = "Buttons",
+                       options = list(dom = "Blfrtip",
+                       buttons=c("copy", "csv", "excel", "pdf", "print")) ) 
+# see datatables.net
+```
+
+
+
+
+
+
+
+
+
